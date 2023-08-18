@@ -39,7 +39,7 @@ export default function Home() {
         </div>
       </div>
       <div className={styles.text}>
-      <h1>Hi, my name is <span className={styles.magic}>Amani Bobo</span> and this is my Digital Portfolio for my Scientific Research Class. In this porfolio I will share a project that I was proud of working on last year which was related to my AP CSP course.</h1>
+      <h1>Hi, my name is <span className={styles.magic}>Amani Bobo</span> and this is my Digital Portfolio for my Scientific Research Class. In this portfolio I will share a project that I was proud of working on last year which was related to my AP CSP course.</h1>
       <h1>When Im not in school and I have some free time, I love to do things like code, play basketball, run, and hangout with my friends occasionally.</h1>
       </div>
       <ProjButton className={styles.button}/>
