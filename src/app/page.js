@@ -1,95 +1,48 @@
-import Image from 'next/image'
+'use client'
+import { useRef, useEffect } from 'react';
 import styles from './page.module.css'
+import ProjButton from '@/components/project-button';
 
 export default function Home() {
+
+  const container = useRef(null);
+  const stickyMask = useRef(null);
+
+  const initialMaskSize = .6;
+  const targetMaskSize = 32;
+  const easing = 0.15;
+  let easedScrollProgress = 0;
+
+  useEffect( () => {
+    requestAnimationFrame(animate)
+  }, [])
+
+  const animate = () => {
+    const maskSizeProgress = targetMaskSize * getScrollProgress();
+    stickyMask.current.style.webkitMaskSize = (initialMaskSize + maskSizeProgress) * 100 + "%";
+    requestAnimationFrame(animate)
+  }
+
+  const getScrollProgress = () => {
+    const scrollProgress = stickyMask.current.offsetTop / (container.current.getBoundingClientRect().height - window.innerHeight)
+    const delta = scrollProgress - easedScrollProgress;
+    easedScrollProgress += delta * easing;
+    return easedScrollProgress
+  }
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+      <div ref={container} className={styles.container}>
+        <div ref={stickyMask} className={styles.stickyMask}>
+          <img src="/medias/pexels-codioful-(formerly-gradienta)-7135121.jpg">
+          </img>
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div className={styles.text}>
+      <h1>Hi, my name is <span className={styles.magic}>Amani Bobo</span> and this is my Digital Portfolio for my Scientific Research Class. In this porfolio I will share a project that I was proud of working on last year which was related to my AP CSP course.</h1>
+      <h1>When Im not in school and I have some free time, I love to do things like code, play basketball, run, and hangout with my friends occasionally.</h1>
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      <ProjButton className={styles.button}/>
     </main>
   )
 }
